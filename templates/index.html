@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Fake News Detector</title>
+
+<style>
+    body {
+        margin: 0;
+        font-family: 'Segoe UI', sans-serif;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        color: white;
+    }
+
+    .container {
+        background: rgba(255,255,255,0.1);
+        backdrop-filter: blur(15px);
+        padding: 30px;
+        border-radius: 20px;
+        width: 500px;
+        text-align: center;
+        box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+    }
+
+    textarea {
+        width: 100%;
+        height: 140px;
+        border-radius: 10px;
+        border: none;
+        padding: 10px;
+        margin-top: 10px;
+    }
+
+    button {
+        margin-top: 10px;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 10px;
+        background: #00c6ff;
+        color: white;
+        cursor: pointer;
+    }
+
+    .result {
+        margin-top: 20px;
+        padding: 15px;
+        border-radius: 10px;
+    }
+
+    .fake { background: rgba(255,0,0,0.2); }
+    .real { background: rgba(0,255,100,0.2); }
+
+    .box {
+        background: rgba(255,255,255,0.1);
+        padding: 10px;
+        border-radius: 10px;
+        margin-top: 10px;
+        font-size: 14px;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h2>📰 Fake News Detection</h2>
+    <p>Supports Hindi • Kannada • Telugu • English</p>
+
+    <form method="POST">
+        <textarea name="news" placeholder="Enter news in any language..."></textarea>
+        <br>
+        <button type="submit">Analyze</button>
+    </form>
+
+    {% if prediction %}
+        <div class="result {{ 'fake' if prediction == 'FAKE' else 'real' }}">
+            <h3>{{ prediction }}</h3>
+            <p>Confidence: {{ confidence }}%</p>
+        </div>
+    {% endif %}
+
+    {% if lang %}
+        <div class="box">
+            <strong>Detected Language:</strong> {{ lang }}
+        </div>
+    {% endif %}
+
+    {% if translated %}
+        <div class="box">
+            <strong>Translated Text:</strong><br>
+            {{ translated }}
+        </div>
+    {% endif %}
+
+</div>
+
+</body>
+</html>
